@@ -1,33 +1,54 @@
 const express = require('express');
 const app = express();
+const PORT = 3000;
 
-const member = [
+const members = [
     {
         id: 1,
-        name: 'John doe',
+        name: 'John Doe',
         email: 'john231@gmail.com',
         status: 'active'
     },
     {
         id: 2,
-        name: 'steve',
+        name: 'Steve',
         email: 'stv123@gmail.com',
         status: 'active'
     },
     {
         id: 3,
-        name: 'steve john',
+        name: 'Steve John',
         email: 'sj98@gmail.com',
         status: 'inactive'
     }
-]
+];
 
-app.get('/', (req, res) => {
-    res.status(200).json(member);
-})
+app.get('/showAllUser', (req, res) => {
+    res.status(200).json(members);
+});
 
-const PORT = 3000;
+// app.get('/showUser/:userID', (req,res)=>{
+
+//     // console.log(req.params.userID);
+//     const  id = (req.params.userID) ;
+//     const user = members.filter(member => member.id === id);
+//     (user.length !==0 ) ? res.status(404).json({message : `user not  found with id ${id }`})
+// }); 
+
+app.get("/showUser/:userId", (req, res) => {
+    // console.log(typeof req.params.userId)
+
+    const id = parseInt(req.params.userId);
+
+    let user = members.filter(member => member.id === id);
+    //console.log('get the user');
+    
+
+    (user.length !== 0) ? res.status(200).json(user) : res.status(404).json({ message: `User not found with id ${id}` })
+});
+
+
 
 app.listen(PORT, () => {
-    console.log(`server is running on port http://localhost:${PORT}`)
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
