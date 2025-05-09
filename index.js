@@ -27,13 +27,7 @@ app.get('/showAllUser', (req, res) => {
     res.status(200).json(members);
 });
 
-// app.get('/showUser/:userID', (req,res)=>{
 
-//     // console.log(req.params.userID);
-//     const  id = (req.params.userID) ;
-//     const user = members.filter(member => member.id === id);
-//     (user.length !==0 ) ? res.status(404).json({message : `user not  found with id ${id }`})
-// }); 
 
 app.get("/showUser/:userId", (req, res) => {
     // console.log(typeof req.params.userId)
