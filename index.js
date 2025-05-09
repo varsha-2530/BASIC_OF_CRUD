@@ -16,6 +16,7 @@ app.get('/showAllUser', (req, res) => {
 
 
 
+
 app.get("/showUser/:userId", (req, res) => {
     // console.log(typeof req.params.userId)
 
@@ -28,21 +29,35 @@ app.get("/showUser/:userId", (req, res) => {
     (user.length !== 0) ? res.status(200).json(user) : res.status(404).json({ message: `User not found with id ${id}` })
 });
 
+
 app.post('/addUser', (request, response) => {
     console.log('User :', request.body)
     // const name = request.body.name ;
     // const email = request.body.email ;
-    const {name,email} =  request.body
-    console.log(name,email);
+    const { name, email } = request.body
+    console.log(name, email);
 
     members.push({
-        id : uuid.v4(),
+        id: uuid.v4(),
         name,
         email
     })
 
     response.status(200).json(members)
 })
+
+app.delete('/deleteUser/:uid', (request, response) => {
+    const id = parseInt(request.params.uid);
+    //console.log(id)
+    const found = members.some(members => members.id === id);
+    //console.log(found);
+    if (found) {
+        const updateMember = members.filter(member => member.id !== id);
+        response.status(200).json(updateMember)
+    } else {
+        response.status(400).json({ message: `User not found with id ${id}` })
+    }
+});
 
 
 
